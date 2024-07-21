@@ -742,7 +742,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -771,6 +770,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    positiion: Attribute.Enumeration<['admin', 'sporter']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1084,6 +1084,71 @@ export interface ApiPaymentPayment extends Schema.CollectionType {
   };
 }
 
+export interface ApiSocialMediaLinkSocialMediaLink
+  extends Schema.CollectionType {
+  collectionName: 'social_media_links';
+  info: {
+    singularName: 'social-media-link';
+    pluralName: 'social-media-links';
+    displayName: 'socialMediaLinks';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Facebook: Attribute.String;
+    Instagram: Attribute.String;
+    Twitter: Attribute.String;
+    piro: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::social-media-link.social-media-link',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::social-media-link.social-media-link',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiWorkingHourWorkingHour extends Schema.CollectionType {
+  collectionName: 'working_hours';
+  info: {
+    singularName: 'working-hour';
+    pluralName: 'working-hours';
+    displayName: 'workingHours';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Days: Attribute.String;
+    time: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::working-hour.working-hour',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::working-hour.working-hour',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1111,6 +1176,8 @@ declare module '@strapi/types' {
       'api::coachess.coachess': ApiCoachessCoachess;
       'api::gallary.gallary': ApiGallaryGallary;
       'api::payment.payment': ApiPaymentPayment;
+      'api::social-media-link.social-media-link': ApiSocialMediaLinkSocialMediaLink;
+      'api::working-hour.working-hour': ApiWorkingHourWorkingHour;
     }
   }
 }
